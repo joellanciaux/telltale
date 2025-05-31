@@ -1,9 +1,9 @@
 import * as path from 'path';
-import fs from 'fs/promises';
+import { readdir } from 'fs/promises';
 
 export const findComponentFiles = async (dir: string): Promise<string[]> => {
   const files: string[] = [];
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const entries = await readdir(dir, { withFileTypes: true });
   
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);

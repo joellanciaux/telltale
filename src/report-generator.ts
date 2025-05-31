@@ -1,5 +1,5 @@
 import * as path from 'path';
-import fs from 'fs/promises';
+import { writeFile } from 'fs/promises';
 import { getComponentDisplayName } from './file-utils';
 import type { ComponentInfo } from './types';
 
@@ -141,6 +141,6 @@ export const analyzeStyleImpact = async (
 
   // Write to file
   const outputPath = 'tailwind-hierarchy-analysis.gen.md';
-  await fs.writeFile(outputPath, markdownLines.join('\n'));
+  await writeFile(outputPath, markdownLines.join('\n'));
   console.log(`✅ Compressed style analysis written to ${outputPath}`);
 }; 

@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite';
 import * as path from 'path';
-import fs from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { findComponentFiles } from './file-utils';
 import { extractContextualClasses, extractComponentImports } from './ast-parser';
 import { extractCSSProperties } from './css-extractor';
@@ -24,7 +24,7 @@ export function tailwindHierarchyPlugin(): Plugin {
       for (const filePath of componentFiles) {
         try {
           const fullPath = path.resolve(filePath);
-          const code = await fs.readFile(fullPath, 'utf-8');
+          const code = await readFile(fullPath, 'utf-8');
           
           const { allClasses: tailwindClasses, contextualMapping } = extractContextualClasses(code, fullPath);
           const { properties: cssProperties, variables: cssVariables } = extractCSSProperties(code);
