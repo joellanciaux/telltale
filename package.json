@@ -16,12 +16,12 @@
     }
   },
   "scripts": {
-    "build": "bun run build:cjs && bun run build:esm && bun run build:post",
+    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run build:post",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
-    "build:post": "bun scripts/create-esm-package.js",
-    "postinstall": "bun run build",
-    "prepublishOnly": "bun run build",
+    "build:post": "node scripts/create-esm-package.js",
+    "postinstall": "pnpm run build",
+    "prepublishOnly": "pnpm run build",
     "clean": "rm -rf dist"
   },
   "files": [
@@ -38,7 +38,6 @@
     "@babel/traverse": "^7.27.4",
     "@babel/types": "^7.27.3",
     "@types/babel__traverse": "^7.20.7",
-    "@types/bun": "latest",
     "vite": "^6.3.5"
   },
   "peerDependencies": {
