@@ -1,0 +1,1 @@
+export { tailwindHierarchyPlugin } from './src/plugin'; 
