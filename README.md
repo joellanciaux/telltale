@@ -1,11 +1,26 @@
 # telltale (beta)
 
 <div align="center">
-  <img src="media/logo.png" alt="Repomix" width="500" height="auto" />
+  <img src="media/logo.png" alt="Repomix" width="auto" height="200" />
   <p align="center">
     <b>Pack your tailwind + css usage into AI-friendly formats</b>
   </p>
 </div>
+
+## Usage
+
+```
+// vite.config.ts
+import { tailwindHierarchyPlugin } from 'jl-telltale'
+
+export default defineConfig({
+  plugins: [
+    // Your other plugins
+    tailwindHierarchyPlugin()
+  ],
+})
+
+```
 
 ## Why
 The general thought is to compact your projects' class heirachy into an unminified / compiled format for better use with LLMs. 
