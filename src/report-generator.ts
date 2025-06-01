@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { getComponentDisplayName } from './file-utils';
 import type { ComponentInfo } from './types';
 
@@ -7,6 +7,10 @@ export const analyzeStyleImpact = async (
   componentMap: Map<string, ComponentInfo>,
   outputPath: string = 'gen/tailwind-component-analysis.gen.md'
 ): Promise<void> => {
+  // Ensure the output directory exists
+  const outputDir = path.dirname(outputPath);
+  await mkdir(outputDir, { recursive: true });
+
   const markdownLines: string[] = [];
   
   markdownLines.push('# Tailwind Component Analysis');

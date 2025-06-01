@@ -16,44 +16,56 @@ export function telltalePlugin(config: TelltaleConfig = {}): Plugin {
   const dependencyGraph: Map<string, Set<string>> = new Map();
   const outputPath = config.outputPath || 'gen/tailwind-component-analysis.gen.md';
 
+  const runAnalysis = async () => {
+    console.log('🔍 Analyzing React components for Tailwind hierarchy...');
+    
+    // Find all React component files
+    const componentFiles = await findComponentFiles('src');
+
+    // Clear previous analysis
+    componentMap.clear();
+    dependencyGraph.clear();
+
+    // Analyze each component file
+    for (const filePath of componentFiles) {
+      try {
+        const fullPath = path.resolve(filePath);
+        const code = await readFile(fullPath, 'utf-8');
+        
+        const { allClasses: tailwindClasses, contextualMapping } = extractContextualClasses(code, fullPath);
+        const { properties: cssProperties, variables: cssVariables } = extractCSSProperties(code);
+        const importedComponents = extractComponentImports(code, fullPath);
+        
+        componentMap.set(fullPath, {
+          filePath: fullPath,
+          tailwindClasses,
+          cssProperties,
+          cssVariables,
+          importedComponents,
+          contextualClasses: contextualMapping,
+        });
+
+        dependencyGraph.set(fullPath, importedComponents);
+      } catch (error) {
+        console.warn(`Failed to analyze ${filePath}: ${error}`);
+      }
+    }
+
+    console.log(`✅ Analyzed ${componentFiles.length} components`);
+    
+    // Generate the report
+    await analyzeStyleImpact(componentMap, outputPath);
+  };
+
   return {
     name: 'telltale',
     
     async buildStart() {
-      console.log('🔍 Analyzing React components for Tailwind hierarchy...');
-      
-      // Find all React component files
-      const componentFiles = await findComponentFiles('src');
-
-      // Analyze each component file
-      for (const filePath of componentFiles) {
-        try {
-          const fullPath = path.resolve(filePath);
-          const code = await readFile(fullPath, 'utf-8');
-          
-          const { allClasses: tailwindClasses, contextualMapping } = extractContextualClasses(code, fullPath);
-          const { properties: cssProperties, variables: cssVariables } = extractCSSProperties(code);
-          const importedComponents = extractComponentImports(code, fullPath);
-          
-          componentMap.set(fullPath, {
-            filePath: fullPath,
-            tailwindClasses,
-            cssProperties,
-            cssVariables,
-            importedComponents,
-            contextualClasses: contextualMapping,
-          });
-
-          dependencyGraph.set(fullPath, importedComponents);
-        } catch (error) {
-          console.warn(`Failed to analyze ${filePath}: ${error}`);
-        }
-      }
-
-      console.log(`✅ Analyzed ${componentFiles.length} components`);
+      await runAnalysis();
     },
 
     closeBundle() {
+      // Also run on production builds
       analyzeStyleImpact(componentMap, outputPath).catch(console.error);
     },
   };
