@@ -1,9 +1,12 @@
 import { parse } from '@babel/parser';
-import babelTraverse from '@babel/traverse';
+import traverse from '@babel/traverse';
 import * as t from '@babel/types';
 import * as path from 'path';
 import { isTailwindClass, isContextualClass } from './tailwind-detector';
 import type { ContextualAnalysisResult } from './types';
+
+// Handle both CommonJS and ES module exports for @babel/traverse
+const babelTraverse = (traverse as any).default || traverse;
 
 export const extractContextualClasses = (code: string, filePath: string): ContextualAnalysisResult => {
   const allClasses = new Set<string>();

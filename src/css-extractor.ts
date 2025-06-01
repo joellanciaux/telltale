@@ -1,7 +1,10 @@
 import { parse } from '@babel/parser';
-import babelTraverse from '@babel/traverse';
+import traverse from '@babel/traverse';
 import * as t from '@babel/types';
 import type { CSSAnalysisResult } from './types';
+
+// Handle both CommonJS and ES module exports for @babel/traverse
+const babelTraverse = (traverse as any).default || traverse;
 
 export const extractCSSProperties = (code: string): CSSAnalysisResult => {
   const properties = new Set<string>();
