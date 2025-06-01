@@ -3,6 +3,15 @@
   "version": "0.0.1",
   "module": "dist/index.js",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joellanciaux/telltale.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joellanciaux/telltale/issues"
+  },
+  "homepage": "https://github.com/joellanciaux/telltale#readme",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -12,6 +21,7 @@
   "scripts": {
     "build": "rollup -c",
     "clean": "rm -rf dist",
+    "release": "npm publish --access public",
     "release:patch": "npm version patch && npm publish --access public",
     "release:minor": "npm version minor && npm publish --access public", 
     "release:major": "npm version major && npm publish --access public",

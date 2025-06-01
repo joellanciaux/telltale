@@ -1,7 +1,7 @@
 # telltale (beta)
 
 <div align="center">
-  <img src="media/logo.png" alt="Repomix" width="auto" height="200" />
+  <img src="https://raw.githubusercontent.com/joellanciaux/telltale/master/media/logo.png" alt="Telltale" width="auto" height="200" />
   <p align="center">
     <b>Pack your tailwind + css usage into AI-friendly formats</b>
   </p>
