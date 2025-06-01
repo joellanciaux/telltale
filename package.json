@@ -1,37 +1,23 @@
 {
   "name": "telltale",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/cjs/index.d.ts",
+  "module": "dist/index.js",
+  "type": "module",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
-      }
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
-    "build": "pnpm run build:cjs && pnpm run build:esm && pnpm run build:post",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:post": "node scripts/create-esm-package.js",
+    "build": "tsc",
     "postinstall": "pnpm run build",
-    "prepublishOnly": "pnpm run build",
-    "clean": "rm -rf dist"
+    "prepublishOnly": "pnpm run build"
   },
   "files": [
     "dist",
     "src",
     "index.ts",
-    "tsconfig.json",
-    "tsconfig.cjs.json",
-    "tsconfig.esm.json",
-    "scripts"
+    "tsconfig.json"
   ],
   "devDependencies": {
     "@babel/parser": "^7.27.4",
