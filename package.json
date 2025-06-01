@@ -1,5 +1,6 @@
 {
   "name": "telltale",
+  "version": "0.0.1",
   "module": "dist/index.js",
   "type": "module",
   "exports": {
@@ -17,8 +18,7 @@
   "files": [
     "dist",
     "src",
-    "tsconfig.json",
-    "rollup.config.js"
+    "tsconfig.json"
   ],
   "devDependencies": {
     "@babel/parser": "^7.27.4",
