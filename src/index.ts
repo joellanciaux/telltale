@@ -1,1 +1,1 @@
-export { tailwindHierarchyPlugin } from './plugin'; 
+export { telltalePlugin } from './plugin'; 

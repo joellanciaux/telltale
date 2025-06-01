@@ -9,18 +9,40 @@
 
 ## Usage
 
-```
+```typescript
 // vite.config.ts
-import { tailwindHierarchyPlugin } from 'jl-telltale'
+import { telltalePlugin } from '@joellanciaux/telltale'
 
 export default defineConfig({
   plugins: [
     // Your other plugins
-    tailwindHierarchyPlugin()
+    telltalePlugin()
   ],
 })
-
 ```
+
+## Configuration
+
+The plugin accepts an optional configuration object:
+
+```typescript
+// vite.config.ts
+import { telltalePlugin } from '@joellanciaux/telltale'
+
+export default defineConfig({
+  plugins: [
+    telltalePlugin({
+      outputPath: 'custom/path/analysis.md' // Optional: customize output file path
+    })
+  ],
+})
+```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `outputPath` | `string` | `gen/tailwind-component-analysis.gen.md` | Path where the analysis report will be generated |
 
 ## Why
 The general thought is to compact your projects' class heirachy into an unminified / compiled format for better use with LLMs. 
@@ -104,13 +126,27 @@ Main orchestration:
 
 ## Usage
 
-The plugin is used exactly the same way as before:
+The plugin can be used with default settings or customized:
 
 ```typescript
-import { tailwindHierarchyPlugin } from './index';
+// Default usage - outputs to gen/tailwind-component-analysis.gen.md
+import { telltalePlugin } from './index';
 
 export default defineConfig({
-  plugins: [tailwindHierarchyPlugin()],
+  plugins: [telltalePlugin()],
+});
+```
+
+```typescript
+// Custom output path
+import { telltalePlugin } from './index';
+
+export default defineConfig({
+  plugins: [
+    telltalePlugin({
+      outputPath: 'docs/styling-analysis.md'
+    })
+  ],
 });
 ```
 

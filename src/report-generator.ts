@@ -4,7 +4,8 @@ import { getComponentDisplayName } from './file-utils';
 import type { ComponentInfo } from './types';
 
 export const analyzeStyleImpact = async (
-  componentMap: Map<string, ComponentInfo>
+  componentMap: Map<string, ComponentInfo>,
+  outputPath: string = 'gen/tailwind-component-analysis.gen.md'
 ): Promise<void> => {
   const markdownLines: string[] = [];
   
@@ -140,7 +141,6 @@ export const analyzeStyleImpact = async (
   }
 
   // Write to file
-  const outputPath = 'tailwind-hierarchy-analysis.gen.md';
   await writeFile(outputPath, markdownLines.join('\n'));
   console.log(`✅ Compressed style analysis written to ${outputPath}`);
 }; 

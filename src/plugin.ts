@@ -7,12 +7,17 @@ import { extractCSSProperties } from './css-extractor';
 import { analyzeStyleImpact } from './report-generator';
 import type { ComponentInfo } from './types';
 
-export function tailwindHierarchyPlugin(): Plugin {
+interface TelltaleConfig {
+  outputPath?: string;
+}
+
+export function telltalePlugin(config: TelltaleConfig = {}): Plugin {
   const componentMap: Map<string, ComponentInfo> = new Map();
   const dependencyGraph: Map<string, Set<string>> = new Map();
+  const outputPath = config.outputPath || 'gen/tailwind-component-analysis.gen.md';
 
   return {
-    name: 'vite-plugin-tailwind-hierarchy',
+    name: 'telltale',
     
     async buildStart() {
       console.log('🔍 Analyzing React components for Tailwind hierarchy...');
@@ -49,7 +54,7 @@ export function tailwindHierarchyPlugin(): Plugin {
     },
 
     closeBundle() {
-      analyzeStyleImpact(componentMap).catch(console.error);
+      analyzeStyleImpact(componentMap, outputPath).catch(console.error);
     },
   };
 } 
