@@ -7,6 +7,12 @@
   </p>
 </div>
 
+## Installation
+
+```
+pnpm install -D @joellanciaux/telltale
+```
+
 ## Usage
 
 ```typescript
