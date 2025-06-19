@@ -1,6 +1,6 @@
 {
   "name": "@joellanciaux/telltale",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "module": "dist/index.js",
   "type": "module",
   "license": "MIT",
